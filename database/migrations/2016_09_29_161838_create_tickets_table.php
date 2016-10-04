@@ -8,23 +8,21 @@ class CreateTicketsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('titulo',200);
+            $table->string('titulo', 200);
             $table->text('detalle');
-            $table->enum('estado',['Pendiente','Abierto','Vencido','Cerrado']);
+            $table->enum('estado', ['Pendiente', 'Abierto', 'Vencido', 'Cerrado']);
 
             $table->integer('user_id')->unsigned();
-            $table->foreing('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->integer('category_id')->unsigned();
-            $table->foreing('category_id')->references('id')->on('categories');
+            $table->integer('ticket_categories_id')->unsigned();
+            $table->foreign('ticket_categories_id')->references('id')->on('ticket_categories');
 
             $table->timestamps();
         });
@@ -32,8 +30,6 @@ class CreateTicketsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
