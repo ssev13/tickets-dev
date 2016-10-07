@@ -23,21 +23,31 @@ Route::get('/',[
 ]);
 
 Route::get('/pendientes',[
+    'as'   => 'tickets.pending',
+    'uses' => 'TicketController@pending'
+]);
+
+Route::get('/abiertos',[
     'as'   => 'tickets.opened',
     'uses' => 'TicketController@opened'
 ]);
 
-Route::get('/tutoriales',[
+Route::get('/cerrados',[
     'as'   => 'tickets.closed',
     'uses' => 'TicketController@closed'
 ]);
 
-Route::get('/populares',[
-    'as'   => 'tickets.popular',
-    'uses' => 'TicketController@popular'
+Route::get('/vencidos',[
+    'as'   => 'tickets.overdue',
+    'uses' => 'TicketController@overdue'
 ]);
 
+Route::get('/detalles/{id}',[
+    'as'   => 'tickets.details',
+    'uses' => 'TicketController@details'
+]);
 
 Auth::routes();
-
+/*
 Route::get('/home', 'HomeController@index');
+*/

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 
 @section('content')
 <div class="container">
@@ -11,7 +11,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+                            <label for="name" class="col-md-4 control-label">Usuario</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
@@ -19,6 +19,85 @@
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
+                            <label for="nombre" class="col-md-4 control-label">Nombre</label>
+
+                            <div class="col-md-6">
+                                <input id="nombre" type="text" class="form-control" name="nombre" value="{{ old('nombre') }}" required>
+
+                                @if ($errors->has('nombre'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('nombre') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('apellido') ? ' has-error' : '' }}">
+                            <label for="apellido" class="col-md-4 control-label">Apellido</label>
+
+                            <div class="col-md-6">
+                                <input id="apellido" type="text" class="form-control" name="apellido" value="{{ old('apellido') }}" required>
+
+                                @if ($errors->has('apellido'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('apellido') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('perfil') ? ' has-error' : '' }}">
+                            <label for="perfil" class="col-md-4 control-label">Perfil</label>
+
+                            <div class="col-md-6">
+                                <select id="perfil" class="form-control" name="perfil" value="{{ old('perfil') }}" required>
+                                    <option>usuario</option>
+                                    <option>tecnico</option>
+                                    <option>externo</option>
+                                </select>
+                                @if ($errors->has('perfil'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('perfil') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('dominio') ? ' has-error' : '' }}">
+                            <label for="dominio" class="col-md-4 control-label">dominio</label>
+
+                            <div class="col-md-6">
+                                <input id="dominio" type="text" class="form-control" name="dominio" value="{{ old('dominio') }}">
+
+                                @if ($errors->has('dominio'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('dominio') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('locacion') ? ' has-error' : '' }}">
+                            <label for="locacion" class="col-md-4 control-label">locacion</label>
+
+                            <div class="col-md-6">
+                                <select id="locacion" class="form-control" name="locacion" value="{{ old('locacion') }}" required>
+                                    <option>Predio</option>
+                                    <option>Leales</option>
+                                    <option>Independencia</option>
+                                    <option>Cooperativa</option>
+                                    <option>Cachi</option>
+                                    <option>Mendoza</option>
+                                </select>
+                                @if ($errors->has('locacion'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('locacion') }}</strong>
                                     </span>
                                 @endif
                             </div>

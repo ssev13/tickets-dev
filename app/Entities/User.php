@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
     use Notifiable;
 
     /**
@@ -15,8 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','email', 'password',
-        //'nombre', 'apellido', 'perfil', 'dominio', 'locacion', 
+        'name','email','password','nombre', 'apellido', 'perfil', 'dominio', 'locacion'
     ];
 
     /**
@@ -25,6 +25,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password','remember_token'
     ];
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(TicketComment::class);
+    }
+
 }
