@@ -7,17 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
 
+	protected $fillable=['titulo','detalle','estado','ticket_categories_id'];
+
 	public function comments()
 	{
 		return $this->hasMany(TicketComment::class);
 	}
 
-	public function author()
+	public function user()
 	{
 		return $this->belongsTo(User::class);
 	}
 
-	public function category()
+/*
+	public function author()
+	{
+		return $this->belongsTo(User::class,'user_id');
+	}
+*/
+
+	public function ticket_categories()
 	{
 		return $this->belongsTo(TicketCategory::class);
 	}
@@ -26,4 +35,5 @@ class Ticket extends Model
 	{
 		return $this->estado == 'Abierto';
 	}
+
 }

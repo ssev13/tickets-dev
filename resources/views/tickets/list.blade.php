@@ -8,8 +8,8 @@
             <div class="row">
                 <h1>
                     Tickets 
-                    <a href="#" class="btn btn-primary">
-                        Nueva solicitud                    </a>
+                    <a href="{{ route('tickets.create')}}" class="btn btn-primary">
+                        Nuevo Ticket                    </a>
                 </h1>
 
                 <p class="label label-info news">

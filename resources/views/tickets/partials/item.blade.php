@@ -18,7 +18,7 @@
                         </a>
 					--}}
                         
-                            <span class="votes-count"></span>
+                            <span class="label label-info news">{{ $ticket->ticket_categories->nombre }} </span>
                             - <span class="comments-count">{{ $ticket->comments->count() }} comentarios</span>.
 
                     <p class="date-t"><span class="glyphicon glyphicon-time"></span>{{ $ticket->created_at->format('d/m/Y H:m') }}</p>

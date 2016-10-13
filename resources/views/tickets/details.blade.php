@@ -16,7 +16,11 @@
                 {{ $ticket->detalle }}
             </h3>
             <h4 class="label label-info news">
-                Autor {{-- $ticket->author->nombre --}}
+                Autor {{ $ticket->user->nombreCompleto }}
+            </h4>
+
+            <h4 class="label label-info news">
+                Categoria {{ $ticket->ticket_categories->nombre }}
             </h4>
 
             <form method="POST" action="http://tickets.app/votar/5" accept-charset="UTF-8"><input name="_token" type="hidden" value="VBIv3EWDAIQuLRW0cGwNQ4OsDKoRhnK2fAEF6UbQ">
@@ -28,11 +32,13 @@
 
             <h3>Nuevo Comentario</h3>
 
-
-            <form method="POST" action="http://tickets.app/comentar/5" accept-charset="UTF-8"><input name="_token" type="hidden" value="VBIv3EWDAIQuLRW0cGwNQ4OsDKoRhnK2fAEF6UbQ">
+            <form method="POST" action=" {{ url('comentar') }}">
+{{--            <form method="POST" action="http://tickets.app/comentar/5" accept-charset="UTF-8"><input name="_token" type="hidden" value="VBIv3EWDAIQuLRW0cGwNQ4OsDKoRhnK2fAEF6UbQ">
+--}}
+                {!! csrf_field() !!}
                 <div class="form-group">
                     <label for="comment">Comentarios:</label>
-                    <textarea rows="4" class="form-control" name="comment" cols="50" id="comment"></textarea>
+                    <textarea rows="4" class="form-control" name="comment" cols="50" id="comment">{{ old('cuerpoTicket') }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="link">Enlace:</label>

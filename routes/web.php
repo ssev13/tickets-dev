@@ -48,6 +48,27 @@ Route::get('/detalles/{id}',[
 ]);
 
 Auth::routes();
+
+Route::group(['middleware' => 'auth'], function(){
+
+    Route::get('/solicitar',[
+        'as'   => 'tickets.create',
+        'uses' => 'TicketController@create'
+    ]);
+
+    Route::post('solicitar',[
+        'as'   => 'tickets.store',
+        'uses' => 'TicketController@store'
+    ]);
+
+    Route::post('comentar',[
+        'as'   => 'comments.submit',
+        'uses' => 'TicketCommentController@comment'
+    ]);
+
+});
+
+
 /*
 Route::get('/home', 'HomeController@index');
 */
