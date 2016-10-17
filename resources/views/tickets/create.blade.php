@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -10,10 +11,17 @@
 			<form method="POST" action=" {{ url('solicitar') }}">
 			    {!! csrf_field() !!}
 
-				<div class="form-group">
+				<div class="form-group">Categoría
 					<select class="form-control" name='categoria'>
 					  @foreach($categories as $category)
-					  	<option value='{{ $category->id }}'>{{ $category->nombre }}</option>
+					  	@if ($category->parent_id == 0)
+						  	<option value='{{ $category->id }}'>{{ $category->nombre }}</option>
+
+					  		@foreach ($category->children as $children)
+						  		<option value='{{ $children->id }}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $children->nombre }}</option>
+					  		@endforeach
+
+					  	@endif
 					  @endforeach
 					</select>			    
 				</div>

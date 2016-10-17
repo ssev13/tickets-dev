@@ -56,14 +56,24 @@ Route::group(['middleware' => 'auth'], function(){
         'uses' => 'TicketController@create'
     ]);
 
-    Route::post('solicitar',[
+    Route::post('/solicitar',[
         'as'   => 'tickets.store',
         'uses' => 'TicketController@store'
     ]);
-
-    Route::post('comentar',[
+/*
+    Route::get('/comentar/{id}',[
+        'as'   => 'comments.create',
+        'uses' => 'TicketCommentController@create'
+    ]);
+*/
+    Route::post('/comentar/{id}',[
         'as'   => 'comments.submit',
-        'uses' => 'TicketCommentController@comment'
+        'uses' => 'TicketCommentController@submit'
+    ]);
+
+    Route::post('/cambioEstado/{id}',[
+        'as'   => 'tickets.status',
+        'uses' => 'TicketController@status'
     ]);
 
 });

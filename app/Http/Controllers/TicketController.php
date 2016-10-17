@@ -47,13 +47,13 @@ class TicketController extends Controller
     public function details($id)
     {
         $ticket = Ticket::findOrFail($id);
-        return view('tickets/details', compact('ticket'));
+        $opciones = ['Seguimiento', 'Tarea', 'Solucion']; 
+        return view('tickets/details', compact('ticket','opciones'));
     }
 
     public function create()
     {
-        $categories = TicketCategory::all();
-//        return dd($categories);
+        $categories = TicketCategory::all(); //where('parent_id',0);
         return view('tickets.create', compact('categories'));
     }
 
@@ -81,10 +81,33 @@ class TicketController extends Controller
     public function comment()
     {
         $categories = TicketCategory::all();
-//        return dd($categories);
         return view('tickets.create', compact('categories'));
     }
 
 
+    public function status(Request $request, $id)
+    {
 
+        $this->validate($request, [
+            'estado'     => 'required',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+
+        $ticket->estado = $request->estado;
+        $ticket->save();
+
+        $comment = new TicketComment();
+        $comment->tipo = 'Seguimiento';
+        $comment->responde = 0;
+        $comment->comentario = 'Cambio de estado a '.$request->estado;
+        $comment->user_id = \Auth::user()->id;
+
+        $ticket->comments()->save($comment);
+
+        session()->flash('success','Se cambio exitosamente el estado del ticket');
+        return redirect()->back();
+
+//      dd($request->all());
+    }
 }

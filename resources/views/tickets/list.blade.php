@@ -25,7 +25,7 @@
 
             <hr>
 
-            <p><a href="http://duilio.me" target="_blank">duilio.me</a></p>
+            <p><a href="http://www.google.com" target="_blank">Google</a></p>
 
         </div>
     </div>

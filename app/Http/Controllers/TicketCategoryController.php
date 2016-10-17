@@ -10,5 +10,5 @@ use App\Entities\TicketCategory;
 
 class TicketCategoryController extends Controller
 {
-    //
+//
 }

@@ -7,42 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class TicketCategory extends Model
 {
 
-    public function tickets()
+    protected $guarded = ['id'];
+
+    protected $fillable = ['nombre', 'detalle', 'estado', 'parent_id'];
+
+    public function parent()
     {
-    	return $this->hasMany(Ticket::class);
+        return $this->belongsTo(TicketCategory::class, 'parent_id');
     }
 
-	// TicketCategory model
-	// loads only direct children - 1 level
-	public function children()
-	{
-	   return $this->hasMany('TicketCategory', 'parent_id');
-	}
-
-	// recursive, loads all descendants
-	public function childrenRecursive()
-	{
-	   return $this->children()->with('childrenRecursive');
-	   // which is equivalent to:
-	   // return $this->hasMany('Survey', 'parent')->with('childrenRecursive);
-	}
-
-	// parent
-	public function parent()
-	{
-	   return $this->belongsTo('TicketCategory','parent_id');
-	}
-
-	// all ascendants
-	public function parentRecursive()
-	{
-	   return $this->parent()->with('parentRecursive');
-	}
+    public function children()
+    {
+        return $this->hasMany(TicketCategory::class, 'parent_id');
+    }
 
 
-/*
-    protected $fillable = [
-        'nombre', 'detalle', 'estado', 'parent_id',
-    ];
-*/
 }
