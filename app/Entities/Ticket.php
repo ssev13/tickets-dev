@@ -19,12 +19,10 @@ class Ticket extends Model
 		return $this->belongsTo(User::class);
 	}
 
-/*
-	public function author()
+	public function encargados()
 	{
-		return $this->belongsTo(User::class,'user_id');
+		return $this->belongsToMany(User::class,'ticket_users')->withTimeStamps();
 	}
-*/
 
 	public function ticket_categories()
 	{

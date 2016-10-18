@@ -24,6 +24,7 @@
                         </a>
                         
                         <span class="label label-success news">{{ $ticket->ticket_categories->nombre }}</span>
+                        <span class="comments-count"> - {{ $ticket->encargados->count() }} encargados</span>.
                         <span class="comments-count"> - {{ $ticket->comments->count() }} comentarios</span>.
 
                        <p class="date-t"><span class="glyphicon glyphicon-time"></span>{{ $ticket->created_at->format('d/m/Y H:m') }}</p>

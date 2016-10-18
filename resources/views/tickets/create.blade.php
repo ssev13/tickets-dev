@@ -14,14 +14,12 @@
 				<div class="form-group">Categoría
 					<select class="form-control" name='categoria'>
 					  @foreach($categories as $category)
-					  	@if ($category->parent_id == 0)
 						  	<option value='{{ $category->id }}'>{{ $category->nombre }}</option>
 
 					  		@foreach ($category->children as $children)
 						  		<option value='{{ $children->id }}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $children->nombre }}</option>
 					  		@endforeach
 
-					  	@endif
 					  @endforeach
 					</select>			    
 				</div>

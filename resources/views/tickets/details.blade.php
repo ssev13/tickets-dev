@@ -25,19 +25,39 @@
                 Autor {{ $ticket->user->nombreCompleto }}
             </h4>
 
-            <h4 class="label label-info news">
+            <h4 class="label label-success news">
                 Categoria {{ $ticket->ticket_categories->nombre }}
             </h4>
-{{--
-            <form method="POST" action="http://tickets.app/votar/5" accept-charset="UTF-8">
-                <!-- input name="_token" type="hidden" value="VBIv3EWDAIQuLRW0cGwNQ4OsDKoRhnK2fAEF6UbQ" -->
-                <!-- button type="submit" class="btn btn-primary">Votar</button -->
+
+            <p class="vote-users">
+            {{--
+                <span class="label label-info">{{ currentUser()->nombreCompleto }}</span>
+            --}}
+                @foreach($ticket->encargados as $encargado)
+                    {!! Form::open(['route' => ['encargados.destroy', $ticket->id, $encargado->id], 'method' => 'DELETE']) !!}
+                        {!! csrf_field() !!}
+                        <button type="submit" class="label label-info">
+                            {{ $encargado->nombreCompleto }}
+                        </button>
+                    {!! Form::close() !!}
+                @endforeach
+            </p>
+
+            {!! Form::open(['route' => ['encargados.submit', $ticket->id], 'method' => 'POST']) !!}
                 {!! csrf_field() !!}
+                <div class="form-group">
+                    <select class="form-control" name='usuarioNuevo'>
+                        @foreach($usuarios as $usuario)
+                            <option value='{{ $usuario->id }}'> {{ $usuario->nombreCompleto }} </option>
+                        @endforeach
+                    </select>               
+                </div>
+
                 <button type="submit" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-thumbs-up"></span> Votar
+                    <span class="glyphicon glyphicon-user"></span> Agregar Usuario
                 </button>
-            </form>
---}}
+            {!! Form::close() !!}
+            <br>
             <form method="POST" action=" {{ url('cambioEstado', $ticket) }}" accept-charset="UTF-8">
                 {!! csrf_field() !!}
                 <div class="form-group">

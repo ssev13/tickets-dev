@@ -40,7 +40,7 @@ class UsersTableSeeder extends BaseSeeder
             'dominio'  => '',
             'locacion' => 'Predio',
 
-            'email'    => 'svides@budeguer.com',
+            'email'    => 'ssev13@gmail.com',
             'password' => bcrypt('123'),
 
         ]);

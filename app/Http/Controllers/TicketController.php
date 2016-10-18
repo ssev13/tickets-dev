@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\User;
 use App\Entities\Ticket;
 use App\Entities\TicketCategory;
 use App\Entities\TicketComment;
@@ -48,15 +49,15 @@ class TicketController extends Controller
     {
         $ticket = Ticket::findOrFail($id);
         $opciones = ['Seguimiento', 'Tarea', 'Solucion']; 
-        return view('tickets/details', compact('ticket','opciones'));
+        $usuarios = User::where('perfil', '!=','usuario')->get();
+        return view('tickets/details', compact('ticket','opciones','usuarios'));
     }
 
     public function create()
     {
-        $categories = TicketCategory::all(); //where('parent_id',0);
+        $categories = TicketCategory::where('parent_id',0)->get();
         return view('tickets.create', compact('categories'));
     }
-
 
     public function store(Request $request)
     {
@@ -71,10 +72,9 @@ class TicketController extends Controller
             'titulo'                => $request->get('titulo'),
             'detalle'               => $request->get('cuerpoTicket'),
             'ticket_categories_id'  => $request->get('categoria'),
-            'estado'                => 'Abierto',
+            'estado'                => 'Pendiente',
         ]);
 
-        //return dd($request->get('categoria'));
         return Redirect::route('tickets.details',$ticket->id);
     }
 
@@ -108,6 +108,6 @@ class TicketController extends Controller
         session()->flash('success','Se cambio exitosamente el estado del ticket');
         return redirect()->back();
 
-//      dd($request->all());
     }
+
 }

@@ -143,7 +143,7 @@ class TicketCategoryTableSeeder extends BaseSeeder
             'parent_id' => 3,
         ]);
         TicketCategory::create([
-            'nombre' => 'Comunicacion',
+            'nombre' => 'Hardware de Comunicacion',
             'detalle' => 'Radios, Videos, internos',
             'estado' => 'Activo',
             'parent_id' => 3,
@@ -151,31 +151,31 @@ class TicketCategoryTableSeeder extends BaseSeeder
 
 //SubCategorias de Usuarios
         TicketCategory::create([
-            'nombre' => 'Alta',
+            'nombre' => 'Alta de Usuario',
             'detalle' => '',
             'estado' => 'Activo',
             'parent_id' => 4,
         ]);
         TicketCategory::create([
-            'nombre' => 'Baja',
+            'nombre' => 'Baja de Usuario',
             'detalle' => '',
             'estado' => 'Activo',
             'parent_id' => 4,
         ]);
         TicketCategory::create([
-            'nombre' => 'Modificación',
+            'nombre' => 'Modificación de Usuario',
             'detalle' => '',
             'estado' => 'Activo',
             'parent_id' => 4,
         ]);
         TicketCategory::create([
-            'nombre' => 'Correo',
+            'nombre' => 'Correo electrónico',
             'detalle' => '',
             'estado' => 'Activo',
             'parent_id' => 4,
         ]);
         TicketCategory::create([
-            'nombre' => 'Navegación',
+            'nombre' => 'Navegación Web',
             'detalle' => '',
             'estado' => 'Activo',
             'parent_id' => 4,

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tickets by ssev13</title>
 
-    <link href="/css/style.css" rel="stylesheet">
+    {!! Html::style("/css/style.css") !!}
+     
 <!--    <link href="http://tickets.app/css/style.css" rel="stylesheet"> -->
 
     <!-- Fonts -->

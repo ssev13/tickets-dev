@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class);
     }
 
+    public function ticketsACargo()
+    {
+        return $this->belongsToMany(Ticket::class,'ticket_users')->withTimeStamps();
+    }
+
     public function comments()
     {
         return $this->hasMany(TicketComment::class);
@@ -43,4 +48,21 @@ class User extends Authenticatable
         return $this->apellido.', '.$this->nombre;
     }
 
+    public function encargado(Ticket $ticket)
+    {
+        return $this->ticketsACargo()->where('ticket_id',$ticket->id)->count();
+    }
+
+    public function asignar($ticket)
+    {
+        if ($this->encargado($ticket)) return false;
+
+        $this->ticketsACargo()->attach($ticket);
+        return true;
+    }
+
+    public function desasignar($ticket)
+    {
+        $this->ticketsACargo()->detach($ticket);
+    }
 }

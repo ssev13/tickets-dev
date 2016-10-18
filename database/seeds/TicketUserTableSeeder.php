@@ -2,15 +2,15 @@
 
 use Illuminate\Database\Seeder;
 use Faker\Generator;
-use App\Entities\TicketComment;
+use App\Entities\TicketUser;
 
-class TicketCommentsTableSeeder extends BaseSeeder
+class TicketUserTableSeeder extends BaseSeeder
 {
     protected $total=250;
 
     public function getModel()
     {
-        return new TicketComment();
+        return new TicketUser();
     }
 
     public function getDummyData(Generator $faker, array $customValues = array())
@@ -18,10 +18,6 @@ class TicketCommentsTableSeeder extends BaseSeeder
         return [
             'user_id' => $this->getRandom('User')->id,
             'ticket_id' => $this->getRandom('Ticket')->id,
-            'comentario' => $faker->text(),
-            'responde' => 0,
-            'tipo' => $faker->randomElement(['Seguimiento', 'Seguimiento', 'Seguimiento', 'Seguimiento', 'Tarea', 'Solucion'])
         ];
     }
-
 }

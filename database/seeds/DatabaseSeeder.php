@@ -16,12 +16,14 @@ class DatabaseSeeder extends Seeder
                 'tickets',
                 'ticket_categories',
                 'ticket_comments',
+                'ticket_users'
         ));
 
         $this->call(UsersTableSeeder::class);
         $this->call(TicketCategoryTableSeeder::class);
         $this->call(TicketTableSeeder::class);
         $this->call(TicketCommentsTableSeeder::class);
+        $this->call(TicketUserTableSeeder::class);
     }
 
     private function truncateTables(array $tables)
