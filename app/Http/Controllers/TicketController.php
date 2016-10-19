@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Entities\User;
 use App\Entities\Ticket;
 use App\Entities\TicketCategory;
+use App\Entities\TicketPriority;
 use App\Entities\TicketComment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Carbon\Carbon;
+
 
 use Illuminate\Support\Facades\Redirect;
 
@@ -16,7 +19,17 @@ class TicketController extends Controller
 {
     public function latest()
     {
+/*
+        $user=\Auth::user();
 
+        if ($user->perfil == 'tecnico') {
+            $tickets = Ticket::orderBy('created_at','DESC')->paginate();
+        }
+        else {
+            $tickets = Ticket::orderBy('created_at','DESC')->paginate();
+//            $tickets = Ticket::where('user_id','currentUser()->id')->paginate();
+        }
+*/
         $tickets = Ticket::orderBy('created_at','DESC')->paginate();
         return view('tickets/list', compact('tickets'));
     }
@@ -48,7 +61,7 @@ class TicketController extends Controller
     public function details($id)
     {
         $ticket = Ticket::findOrFail($id);
-        $opciones = ['Seguimiento', 'Tarea', 'Solucion']; 
+        $opciones = ['Seguimiento', 'Tarea', 'Documento', 'Solucion']; 
         $usuarios = User::where('perfil', '!=','usuario')->get();
         return view('tickets/details', compact('ticket','opciones','usuarios'));
     }
@@ -68,10 +81,18 @@ class TicketController extends Controller
             'categoria'    => 'required'
         ]);
 
+        $categoria = TicketCategory::findOrFail($request->get('categoria'));
+        $prioridad = $categoria->ticket_priorities_id;
+        $horas = TicketPriority::findOrFail($prioridad);
+        $hoy = Carbon::now();
+        $vencimiento = $hoy->addHours($horas->horas);
+
         $ticket = \Auth::user()->tickets()->create([
             'titulo'                => $request->get('titulo'),
             'detalle'               => $request->get('cuerpoTicket'),
             'ticket_categories_id'  => $request->get('categoria'),
+            'ticket_priorities_id'  => $prioridad,
+            'vencimiento'           => $vencimiento,
             'estado'                => 'Pendiente',
         ]);
 
@@ -99,6 +120,7 @@ class TicketController extends Controller
 
         $comment = new TicketComment();
         $comment->tipo = 'Seguimiento';
+        $comment->tipo_obs = '';
         $comment->responde = 0;
         $comment->comentario = 'Cambio de estado a '.$request->estado;
         $comment->user_id = \Auth::user()->id;

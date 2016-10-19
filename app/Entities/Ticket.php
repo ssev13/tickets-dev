@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
 
-	protected $fillable=['titulo','detalle','estado','ticket_categories_id'];
+	protected $fillable=['titulo','detalle','estado','ticket_categories_id','ticket_priorities_id','vencimiento'];
 
 	public function comments()
 	{
@@ -24,9 +24,19 @@ class Ticket extends Model
 		return $this->belongsToMany(User::class,'ticket_users')->withTimeStamps();
 	}
 
+    public function usuariosacargo(User $user)
+    {
+        return $this->encargados()->count();
+    }
+
 	public function ticket_categories()
 	{
 		return $this->belongsTo(TicketCategory::class);
+	}
+
+	public function ticket_priorities()
+	{
+		return $this->belongsTo(TicketPriority::class);
 	}
 
 	public function getOpenAttribute()

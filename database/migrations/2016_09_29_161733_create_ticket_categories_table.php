@@ -18,6 +18,9 @@ class CreateTicketCategoriesTable extends Migration
             $table->text('detalle');
             $table->enum('estado', ['Activo', 'Inactivo']);
 
+            $table->integer('ticket_priorities_id')->unsigned();
+            $table->foreign('ticket_priorities_id')->references('id')->on('ticket_priorities')->onDelete('cascade');
+
             $table->integer('parent_id')->unsigned();
 
             $table->timestamps();

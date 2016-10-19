@@ -16,9 +16,16 @@ class TicketUserController extends Controller
     	$ticket = Ticket::findOrFail($id);
     	$usuario = User::findOrFail($request->usuarioNuevo);
 
-    	$usuario->asignar($ticket);
+        if ($ticket->usuariosacargo($usuario) > 0) {
+            session()->flash('success','El usuario fue asignado exitosamente');
+        }
+        else {
+            session()->flash('success','El primer usuario fue asignado exitosamente');
+            $ticket->estado = 'Abierto';
+            $ticket->save();
+        }
 
-    	session()->flash('success','El usuario fue asignado exitosamente');
+        $usuario->asignar($ticket);
 
     	return redirect()->back();
     }
@@ -30,7 +37,14 @@ class TicketUserController extends Controller
 
     	$usuario->desasignar($ticket);
 
-    	session()->flash('success','El usuario fue quitado exitosamente');
+        if ($ticket->usuariosacargo($usuario) < 1) {
+            session()->flash('success','El usuario fue quitado exitosamente. No hay más usuarios');
+            $ticket->estado = 'Pendiente';
+            $ticket->save();
+        }
+        else {
+            session()->flash('success','El usuario fue quitado exitosamente');
+        }
 
     	return redirect()->back();
     }

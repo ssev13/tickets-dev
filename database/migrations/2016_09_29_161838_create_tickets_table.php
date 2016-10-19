@@ -17,12 +17,16 @@ class CreateTicketsTable extends Migration
             $table->string('titulo', 200);
             $table->text('detalle');
             $table->enum('estado', ['Pendiente', 'Abierto', 'Vencido', 'Cerrado']);
+            $table->dateTime('vencimiento');
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('ticket_categories_id')->unsigned();
             $table->foreign('ticket_categories_id')->references('id')->on('ticket_categories');
+
+            $table->integer('ticket_priorities_id')->unsigned();
+            $table->foreign('ticket_priorities_id')->references('id')->on('ticket_priorities')->onDelete('cascade');
 
             $table->timestamps();
         });

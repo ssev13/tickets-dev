@@ -20,7 +20,8 @@ class TicketCommentsTableSeeder extends BaseSeeder
             'ticket_id' => $this->getRandom('Ticket')->id,
             'comentario' => $faker->text(),
             'responde' => 0,
-            'tipo' => $faker->randomElement(['Seguimiento', 'Seguimiento', 'Seguimiento', 'Seguimiento', 'Tarea', 'Solucion'])
+            'tipo' => $faker->randomElement(['Seguimiento', 'Seguimiento', 'Seguimiento', 'Seguimiento', 'Tarea', 'Solucion']),
+            'tipo_obs' => '',
         ];
     }
 

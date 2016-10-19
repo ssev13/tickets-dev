@@ -14,12 +14,14 @@ class DatabaseSeeder extends Seeder
                 'users',
                 'password_resets',
                 'tickets',
+                'ticket_priorities',
                 'ticket_categories',
                 'ticket_comments',
                 'ticket_users'
         ));
 
         $this->call(UsersTableSeeder::class);
+        $this->call(TicketPriorityTableSeeder::class);
         $this->call(TicketCategoryTableSeeder::class);
         $this->call(TicketTableSeeder::class);
         $this->call(TicketCommentsTableSeeder::class);

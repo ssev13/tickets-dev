@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
 
             $table->enum('perfil', ['usuario', 'tecnico', 'externo']);
             $table->string('dominio')->nullable();
-            $table->enum('locacion', ['Predio', 'Leales', 'Independencia', 'Cooperativa', 'Cachi', 'Mendoza']);
+            $table->enum('locacion', ['Predio', 'Leales', 'Independencia', 'Cooperativa', 'Cachi', 'Mendoza', 'Externo']);
 
             $table->rememberToken();
             $table->timestamps();

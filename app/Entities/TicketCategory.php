@@ -21,5 +21,10 @@ class TicketCategory extends Model
         return $this->hasMany(TicketCategory::class, 'parent_id');
     }
 
+    public function prioridad()
+    {
+        return $this->hasOne(TicketPriority::class);
+    }
+
 
 }

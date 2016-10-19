@@ -24,7 +24,10 @@ class CreateTicketCommentsTable extends Migration
 
             $table->integer('responde'); //si es una respuesta a algún comentario anterior aqui va el id.
 
-            $table->enum('tipo', ['Seguimiento', 'Tarea', 'Solucion']);
+            $table->enum('tipo', ['Seguimiento', 'Tarea', 'Documento', 'Solucion']);
+            $table->text('tipo_obs');   //Depende del tipo. 
+                                        //Si es tarea puede ser si ya está realizada. 
+                                        //Si es un documento el enlace de descarga
 
             $table->timestamps();
         });

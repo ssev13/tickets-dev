@@ -30,9 +30,6 @@
             </h4>
 
             <p class="vote-users">
-            {{--
-                <span class="label label-info">{{ currentUser()->nombreCompleto }}</span>
-            --}}
                 @foreach($ticket->encargados as $encargado)
                     {!! Form::open(['route' => ['encargados.destroy', $ticket->id, $encargado->id], 'method' => 'DELETE']) !!}
                         {!! csrf_field() !!}
@@ -42,7 +39,6 @@
                     {!! Form::close() !!}
                 @endforeach
             </p>
-
             {!! Form::open(['route' => ['encargados.submit', $ticket->id], 'method' => 'POST']) !!}
                 {!! csrf_field() !!}
                 <div class="form-group">
@@ -54,7 +50,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-user"></span> Agregar Usuario
+                    <span class="glyphicon glyphicon-user"></span> Asignar Técnico
                 </button>
             {!! Form::close() !!}
             <br>

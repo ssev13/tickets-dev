@@ -13,18 +13,19 @@ class UsersTableSeeder extends BaseSeeder
 
     public function getDummyData(Generator $faker, array $customValues = array())
     {
+        $faker = Faker\Factory::create('es_AR');
         return [
 
                 'nombre'   => $faker->firstName,
                 'apellido' => $faker->lastName,
 
-                'perfil'   => $faker->randomElement(['tecnico', 'usuario', 'usuario']),
+                'perfil'   => 'usuario',
                 'name'     => $faker->userName,
                 'dominio'  => '',
                 'locacion' => $faker->randomElement(['Predio', 'Predio', 'Leales']),
 
                 'email'    => $faker->userName.'@budeguer.com',
-                'password' => bcrypt('1234'),
+                'password' => bcrypt('123'),
         ];
     }
 
@@ -44,6 +45,82 @@ class UsersTableSeeder extends BaseSeeder
             'password' => bcrypt('123'),
 
         ]);
+
+        User::create([
+
+            'nombre'   => 'Marcelo',
+            'apellido' => 'Dulci',
+
+            'perfil'   => 'tecnico',
+            'name'     => 'mdulci',
+            'dominio'  => '',
+            'locacion' => 'Predio',
+
+            'email'    => 'mdulci@budeguer.com',
+            'password' => bcrypt('123'),
+
+        ]);
+
+        User::create([
+
+            'nombre'   => 'Martin',
+            'apellido' => 'Corbalan',
+
+            'perfil'   => 'tecnico',
+            'name'     => 'mcorbalan',
+            'dominio'  => '',
+            'locacion' => 'Predio',
+
+            'email'    => 'mcorbalan@budeguer.com',
+            'password' => bcrypt('123'),
+
+        ]);
+
+        User::create([
+
+            'nombre'   => 'Aldo',
+            'apellido' => 'Pacheco',
+
+            'perfil'   => 'tecnico',
+            'name'     => 'apacheco',
+            'dominio'  => '',
+            'locacion' => 'Leales',
+
+            'email'    => 'apacheco@budeguer.com',
+            'password' => bcrypt('123'),
+
+        ]);
+
+        User::create([
+
+            'nombre'   => 'Gustavo',
+            'apellido' => 'Rivadeneira',
+
+            'perfil'   => 'externo',
+            'name'     => 'grivadeneira',
+            'dominio'  => '',
+            'locacion' => 'Externo',
+
+            'email'    => 'grivadeneira@hotmail.com',
+            'password' => bcrypt('123'),
+
+        ]);
+
+        User::create([
+
+            'nombre'   => 'Soporte',
+            'apellido' => 'Synagro',
+
+            'perfil'   => 'externo',
+            'name'     => 'synagro',
+            'dominio'  => '',
+            'locacion' => 'Externo',
+
+            'email'    => 'soporte@synagro.com',
+            'password' => bcrypt('123'),
+
+        ]);
+
     }
 
     /**

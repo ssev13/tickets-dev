@@ -58,6 +58,7 @@ class User extends Authenticatable
         if ($this->encargado($ticket)) return false;
 
         $this->ticketsACargo()->attach($ticket);
+
         return true;
     }
 
