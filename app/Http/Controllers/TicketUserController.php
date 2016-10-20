@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Entities\Ticket;
+use App\Entities\TicketCategory;
+use App\Entities\TicketPriority;
 use App\Entities\User;
+
+use Carbon\Carbon;
 
 class TicketUserController extends Controller
 {
@@ -15,15 +19,23 @@ class TicketUserController extends Controller
     {
     	$ticket = Ticket::findOrFail($id);
     	$usuario = User::findOrFail($request->usuarioNuevo);
-
+        $cat = $ticket->ticket_categories_id;
+        $categoria = TicketCategory::findOrFail($cat);
+        $prioridad = $categoria->ticket_priorities_id;
+        $horas = TicketPriority::findOrFail($prioridad);
+ 
+        $hoy = Carbon::now();
+ 
+        $ticket->vencimiento = $hoy->addHours($horas->horas);
+       
         if ($ticket->usuariosacargo($usuario) > 0) {
             session()->flash('success','El usuario fue asignado exitosamente');
         }
         else {
             session()->flash('success','El primer usuario fue asignado exitosamente');
             $ticket->estado = 'Abierto';
-            $ticket->save();
         }
+        $ticket->save();
 
         $usuario->asignar($ticket);
 
@@ -48,4 +60,5 @@ class TicketUserController extends Controller
 
     	return redirect()->back();
     }
+
 }

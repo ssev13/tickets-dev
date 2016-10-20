@@ -40,23 +40,7 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                    <ul class="nav navbar-nav">
-                        <li role="presentation">
-                            <a href="/">Recientes</a>
-                        </li>
-                        <li role="presentation" class="active">
-                            <a href="/pendientes">Pendientes</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="/abiertos">Abiertos</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="/vencidos">Vencidos</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="/cerrados">Finalizados</a>
-                        </li>
-                    </ul>
+                    {!! Html::menu(config('tickets.menu')) !!}
 
                     @include('layouts.login')
 

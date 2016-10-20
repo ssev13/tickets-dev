@@ -17,6 +17,17 @@ use Illuminate\Support\Facades\Redirect;
 
 class TicketController extends Controller
 {
+    protected function selectTicketList()
+    {
+        return Ticket::selectRaw(
+            'tickets.*,'.
+            '( SELECT nombre   FROM ticket_categories WHERE ticket_categories.id = tickets.ticket_categories_id ) as categoria,'.
+            '( SELECT nombre   FROM ticket_priorities WHERE ticket_priorities.id = tickets.ticket_priorities_id ) as prioridad,'.
+            '( SELECT COUNT(*) FROM ticket_comments WHERE ticket_comments.ticket_id = tickets.id ) as num_comments,'.
+            '( SELECT COUNT(*) FROM ticket_users WHERE ticket_users.ticket_id = tickets.id ) as num_encargados'
+            )->with('user');
+    }
+
     public function latest()
     {
 /*
@@ -30,32 +41,47 @@ class TicketController extends Controller
 //            $tickets = Ticket::where('user_id','currentUser()->id')->paginate();
         }
 */
-        $tickets = Ticket::orderBy('created_at','DESC')->paginate();
-        return view('tickets/list', compact('tickets'));
+        $hoy = Carbon::now();
+        $tickets = $this->selectTicketList()
+            ->orderBy('created_at','DESC')
+            ->paginate();
+        return view('tickets/list', compact('tickets','hoy'));
     }
 
     public function pending()
     {
-        $tickets = Ticket::where('estado','Pendiente')->paginate();
-        return view('tickets/list', compact('tickets'));
+        $hoy = Carbon::now();
+        $tickets = $this->selectTicketList()
+            ->where('estado','Pendiente')
+            ->paginate();
+        return view('tickets/list', compact('tickets','hoy'));
     }
 
     public function opened()
     {
-        $tickets = Ticket::where('estado','Abierto')->paginate();
-        return view('tickets/list', compact('tickets'));
+        $hoy = Carbon::now();
+        $tickets = $this->selectTicketList()
+            ->where('estado','Abierto')
+            ->paginate();
+        return view('tickets/list', compact('tickets','hoy'));
     }
 
     public function closed()
     {
-        $tickets = Ticket::where('estado','Cerrado')->paginate();
-        return view('tickets/list', compact('tickets'));
+        $hoy = Carbon::now();
+        $tickets = $this->selectTicketList()
+            ->where('estado','Cerrado')
+            ->paginate();
+        return view('tickets/list', compact('tickets','hoy'));
     }
 
     public function overdue()
     {
-        $tickets = Ticket::where('estado','Vencido')->paginate();
-        return view('tickets/list', compact('tickets'));
+        $hoy = Carbon::now();
+        $tickets = $this->selectTicketList()
+            ->where('estado','Vencido')
+            ->paginate();
+        return view('tickets/list', compact('tickets','hoy'));
     }
 
     public function details($id)

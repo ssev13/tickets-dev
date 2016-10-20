@@ -16,8 +16,8 @@ class TicketTableSeeder extends BaseSeeder
         return [
             'titulo'  => $faker->sentence(),
             'detalle' => $faker->text(),
-            'estado'  => $faker->randomElement(['Pendiente', 'Abierto', 'Abierto', 'Abierto', 'Vencido', 'Cerrado']),
-            'vencimiento' => $faker->dateTimeBetween('now', '+1 month'),
+            'estado'  => $faker->randomElement(['Pendiente', 'Abierto', 'Abierto', 'Abierto', 'Cerrado']),
+            'vencimiento' => $faker->dateTimeBetween('now', '1 week'),
             'user_id' => $this->getRandom('User')->id,
             'ticket_priorities_id' => rand(1, 5),
             'ticket_categories_id' => $this->getRandom('TicketCategory')->id,

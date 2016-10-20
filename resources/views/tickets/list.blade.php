@@ -8,7 +8,7 @@
         <h1>
             <div class="col-md-4">
                     Tickets 
-                    <a href="{{ route('tickets.create')}}" class="btn btn-primary">
+                    <a href="{{ route('tickets.create') }}" class="btn btn-primary">
                         Nuevo Ticket                    
                     </a>
             </div>
@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-11 col-md-offset-1">
             @foreach($tickets as $ticket)
-                @include('tickets/partials/item', compact('ticket'))
+                @include('tickets/partials/item', compact('ticket','hoy'))
             @endforeach
             {{ $tickets->render() }}
         </div>

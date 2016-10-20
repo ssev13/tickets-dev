@@ -15,7 +15,7 @@
                                 @include('tickets.partials.estado', compact($ticket))
                               </div>
                               <div class="col-md-2" align="right">
-                                @include('tickets.partials.vencimiento', compact($ticket))
+                                @include('tickets.partials.vencimiento', compact($ticket,$hoy))
                               </div>
                             </h5>
                         </div>                    
@@ -23,10 +23,11 @@
 
                     <p>
 
-                        <span class="label label-success news">{{ $ticket->ticket_categories->nombre }}</span>
-                        <span class="comments-count"> - {{ $ticket->encargados->count() }} encargados</span>.
-                        <span class="comments-count"> - {{ $ticket->comments->count() }} comentarios</span>.
+                        <span class="label label-success news">{{ $ticket->categoria }}</span>
+                        <span class="comments-count"> - {{ $ticket->num_encargados }} encargados</span>.
+                        <span class="comments-count"> - {{ $ticket->num_comments }} comentarios</span>.
 
-                       <p class="date-t"><span class="glyphicon glyphicon-time"></span>{{ $ticket->created_at->format('d/m/Y H:m') }}</p>
+                       <p class="date-t"><span class="glyphicon glyphicon-time"></span>{{ $ticket->created_at->format('d/m/Y H:m') }}
+                       por {{ $ticket->user->nombreCompleto }}</p>
                     </p>
                 </div> 

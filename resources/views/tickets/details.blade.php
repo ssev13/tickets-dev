@@ -9,7 +9,7 @@
                 {{ $ticket->titulo }}
 
                 @include('tickets.partials.estado', compact($ticket))
-
+                
             </h2>
 
             @if (Session::has('success'))
@@ -18,6 +18,9 @@
                 </div>
             @endif
 
+            <h3 class="title-show">
+                {{ $ticket->vencimiento }}
+            </h3>
             <h3 class="title-show">
                 {{ $ticket->detalle }}
             </h3>
