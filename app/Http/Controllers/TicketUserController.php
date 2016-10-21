@@ -18,7 +18,11 @@ class TicketUserController extends Controller
     public function submit($id, Request $request)
     {
     	$ticket = Ticket::findOrFail($id);
+
+//        return dd($request)->all();
+
     	$usuario = User::findOrFail($request->usuarioNuevo);
+
         $cat = $ticket->ticket_categories_id;
         $categoria = TicketCategory::findOrFail($cat);
         $prioridad = $categoria->ticket_priorities_id;

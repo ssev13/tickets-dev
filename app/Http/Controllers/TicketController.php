@@ -10,8 +10,9 @@ use App\Entities\TicketComment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Carbon\Carbon;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Redirect;
 
@@ -87,8 +88,17 @@ class TicketController extends Controller
     public function details($id)
     {
         $ticket = Ticket::findOrFail($id);
+
         $opciones = ['Seguimiento', 'Tarea', 'Documento', 'Solucion']; 
-        $usuarios = User::where('perfil', '!=','usuario')->get();
+
+/*        $usuarios = DB::select( DB::raw("SELECT * 
+                FROM users
+                LEFT JOIN ticket_users ON users.id = ticket_users.user_id AND ticket_users.ticket_id = :ticketid
+                WHERE ticket_users.user_id is null
+                AND users.perfil<>'usuario'"), array('ticketid' => $id));
+*/
+        $usuarios = User::where('perfil','!=', 'usuario')->get();
+        
         return view('tickets/details', compact('ticket','opciones','usuarios'));
     }
 

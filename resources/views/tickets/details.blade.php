@@ -18,14 +18,14 @@
                 </div>
             @endif
 
-            <h3 class="title-show">
-                {{ $ticket->vencimiento }}
+            <h3 class="label label-info">
+                Vencimiento {{ $ticket->vencimiento }}
             </h3>
             <h3 class="title-show">
                 {{ $ticket->detalle }}
             </h3>
             <h4 class="label label-info news">
-                Autor {{ $ticket->user->nombreCompleto }}
+                Autor {{ $ticket->user->nombreCompleto /* $ticket->user->apellido.', '.$ticket->user->nombre */ }}
             </h4>
 
             <h4 class="label label-success news">
@@ -37,7 +37,7 @@
                     {!! Form::open(['route' => ['encargados.destroy', $ticket->id, $encargado->id], 'method' => 'DELETE']) !!}
                         {!! csrf_field() !!}
                         <button type="submit" class="label label-info">
-                            {{ $encargado->nombreCompleto }}
+                            {{ $encargado->apellido.', '.$encargado->nombre }}
                         </button>
                     {!! Form::close() !!}
                 @endforeach
@@ -47,7 +47,15 @@
                 <div class="form-group">
                     <select class="form-control" name='usuarioNuevo'>
                         @foreach($usuarios as $usuario)
-                            <option value='{{ $usuario->id }}'> {{ $usuario->nombreCompleto }} </option>
+                            {{ $yaesta = false }}
+                            @foreach($ticket->encargados as $encargado)
+                                @if($encargado->id == $usuario->id)
+                                    {{ $yaesta = true }}                                    
+                                @endif
+                            @endforeach
+                            @if(! $yaesta)
+                                <option value='{{ $usuario->id }}'> {{ $usuario->apellido.', '.$usuario->nombre }} </option>
+                            @endif
                         @endforeach
                     </select>               
                 </div>
