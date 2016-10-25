@@ -1,7 +1,5 @@
-<ul class="nav navbar-nav">
+<ul class="dropdown-menu">
     @foreach ($items as $item => $texto)
-        <li role="presentation" {!! Html::classes(['active' => Route::is($item)]) !!}>
-            <a href="{{ route($item) }}">{{ $texto }}</a>
-        </li>
+        <li><a href="{{ route($item) }}">{{ $texto }}</a></li>
     @endforeach
 </ul>

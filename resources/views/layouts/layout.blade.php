@@ -40,7 +40,22 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                    {!! Html::menu(config('tickets.menu')) !!}
+                  <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filtros <span class="caret"></span></a>
+
+                        {!! Html::menu(config('tickets.menu')) !!}
+
+                    </li>
+                  </ul>
+                <div class="navbar-form navbar-left">
+                    {!! Form::open(['route' => ['tickets.search'], 'method' => 'POST']) !!}
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Buscar" name='busqueda'>
+                        </div>
+                        <button type="submit" class="btn btn-default">Buscar</button>
+                    {!! Form::close() !!}
+                </div>
 
                     @include('layouts.login')
 

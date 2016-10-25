@@ -42,9 +42,14 @@
                     {!! Form::close() !!}
                 @endforeach
             </p>
+            @if (Auth::user()->perfil != 'usuario')
+                <?php $clase = ''  ?>
+            @else
+                <?php $clase = ' hidden'  ?>
+            @endif
             {!! Form::open(['route' => ['encargados.submit', $ticket->id], 'method' => 'POST']) !!}
                 {!! csrf_field() !!}
-                <div class="form-group">
+                <div class="form-group {{ $clase }}" >
                     <select class="form-control" name='usuarioNuevo'>
                         @foreach($usuarios as $usuario)
                             {{ $yaesta = false }}
@@ -60,14 +65,14 @@
                     </select>               
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary {{ $clase }}">
                     <span class="glyphicon glyphicon-user"></span> Asignar Técnico
                 </button>
             {!! Form::close() !!}
             <br>
             <form method="POST" action=" {{ url('cambioEstado', $ticket) }}" accept-charset="UTF-8">
                 {!! csrf_field() !!}
-                <div class="form-group">
+                <div class="form-group  {{ $clase }}">
                     <select class="form-control" name='estado'>
                         <option value='Pendiente'>Pendiente</option>
                         <option value='Abierto'>Abierto</option>
@@ -76,7 +81,7 @@
                     </select>               
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary {{ $clase }}">
                     <span class="glyphicon glyphicon-edit"></span> Cambiar Estado
                 </button>
             </form>

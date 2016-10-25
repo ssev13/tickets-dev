@@ -49,6 +49,19 @@ class TicketController extends Controller
         return view('tickets/list', compact('tickets','hoy'));
     }
 
+    public function search(Request $request)
+    {
+        $hoy = Carbon::now();
+
+        $buscar = '%'.$request->busqueda.'%';
+
+        $tickets = $this->selectTicketList()
+            ->where('titulo','like', $buscar)
+            ->orWhere('detalle','like', $buscar)
+            ->paginate();
+        return view('tickets/list', compact('tickets','hoy'));
+    }
+
     public function pending()
     {
         $hoy = Carbon::now();

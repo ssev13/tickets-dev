@@ -22,6 +22,11 @@ Route::get('/',[
     'uses' => 'TicketController@latest'
 ]);
 
+Route::post('/busqueda',[
+    'as'   => 'tickets.search',
+    'uses' => 'TicketController@search'
+]);
+
 Route::get('/pendientes',[
     'as'   => 'tickets.pending',
     'uses' => 'TicketController@pending'
