@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Entities\Ticket;
+use App\Entities\TicketComment;
 use App\Entities\TicketCategory;
 use App\Entities\TicketPriority;
 use App\Entities\User;
@@ -40,6 +41,14 @@ class TicketUserController extends Controller
             $ticket->estado = 'Abierto';
         }
         $ticket->save();
+//Grabo un comentario con el alta de usuario
+        $comment = new TicketComment();
+        $comment->user_id    = \Auth::user()->id;
+        $comment->tipo       = 'Seguimiento';
+        $comment->comentario = 'Se agregó a '.$usuario->nombreComun.' como encargado.';
+        $comment->responde   = 0;
+        $comment->tipo_obs   = '';
+        $ticket->comments()->save($comment);
 
         $usuario->asignar($ticket);
 
@@ -50,6 +59,15 @@ class TicketUserController extends Controller
     {
     	$ticket = Ticket::findOrFail($id);
     	$usuario = User::findOrFail($user);
+
+//Grabo un comentario con la baja de usuario
+        $comment = new TicketComment();
+        $comment->user_id = \Auth::user()->id;
+        $comment->tipo = 'Seguimiento';
+        $comment->comentario = 'Se eliminó a '.$usuario->nombreComun.' como encargado.';
+        $comment->responde = 0;
+        $comment->tipo_obs = '';
+        $ticket->comments()->save($comment);
 
     	$usuario->desasignar($ticket);
 

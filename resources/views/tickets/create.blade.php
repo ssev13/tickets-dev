@@ -11,6 +11,10 @@
 			<form method="POST" action=" {{ url('solicitar') }}">
 			    {!! csrf_field() !!}
 
+                <div>
+                    <span>IP de creación:  {{ Request::ip() }} </span>
+                </div>
+
 				<div class="form-group">Categoría
 					<select class="form-control" name='categoria'>
 					  @foreach($categories as $category)

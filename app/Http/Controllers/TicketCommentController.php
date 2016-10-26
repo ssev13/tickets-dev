@@ -9,6 +9,8 @@ use App\Http\Requests;
 use App\Entities\TicketComment;
 use App\Entities\Ticket;
 
+use App\Notifications\TicketCommented;
+
 class TicketCommentController extends Controller
 {
 
@@ -23,9 +25,12 @@ class TicketCommentController extends Controller
 
     	$comment = new TicketComment($request->all());
     	$comment->user_id = \Auth::user()->id;
+        $comment->tipo_obs = '';
 
     	$ticket = Ticket::findOrFail($id);
     	$ticket->comments()->save($comment);
+
+        $ticket->user->notify(new TicketCommented($comment));
 
         if ($request['tipo'] == 'Solucion') {
             $ticket->estado = 'Cerrado';
@@ -33,6 +38,7 @@ class TicketCommentController extends Controller
         }
 
     	session()->flash('success','Tu comentario fue guardado exitosamente');
+
     	return redirect()->back();
 
 //    	dd($request->all());

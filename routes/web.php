@@ -17,45 +17,45 @@ Route::get('/', function () {
 });
 */
 
-Route::get('/',[
-    'as'   => 'tickets.latest',
-    'uses' => 'TicketController@latest'
-]);
-
-Route::post('/busqueda',[
-    'as'   => 'tickets.search',
-    'uses' => 'TicketController@search'
-]);
-
-Route::get('/pendientes',[
-    'as'   => 'tickets.pending',
-    'uses' => 'TicketController@pending'
-]);
-
-Route::get('/abiertos',[
-    'as'   => 'tickets.opened',
-    'uses' => 'TicketController@opened'
-]);
-
-Route::get('/cerrados',[
-    'as'   => 'tickets.closed',
-    'uses' => 'TicketController@closed'
-]);
-
-Route::get('/vencidos',[
-    'as'   => 'tickets.overdue',
-    'uses' => 'TicketController@overdue'
-]);
-
-Route::get('/detalles/{id}',[
-    'as'   => 'tickets.details',
-    'uses' => 'TicketController@details'
-]);
 
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function(){
 
+    Route::get('/',[
+        'as'   => 'tickets.latest',
+        'uses' => 'TicketController@latest'
+    ]);
+
+    Route::post('/busqueda',[
+        'as'   => 'tickets.search',
+        'uses' => 'TicketController@search'
+    ]);
+
+    Route::get('/pendientes',[
+        'as'   => 'tickets.pending',
+        'uses' => 'TicketController@pending'
+    ]);
+
+    Route::get('/abiertos',[
+        'as'   => 'tickets.opened',
+        'uses' => 'TicketController@opened'
+    ]);
+
+    Route::get('/cerrados',[
+        'as'   => 'tickets.closed',
+        'uses' => 'TicketController@closed'
+    ]);
+
+    Route::get('/vencidos',[
+        'as'   => 'tickets.overdue',
+        'uses' => 'TicketController@overdue'
+    ]);
+
+    Route::get('/detalles/{id}',[
+        'as'   => 'tickets.details',
+        'uses' => 'TicketController@details'
+    ]);
 //Crear Tickets
     Route::get('/solicitar',[
         'as'   => 'tickets.create',

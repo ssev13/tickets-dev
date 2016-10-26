@@ -21,6 +21,7 @@ class TicketTableSeeder extends BaseSeeder
             'user_id' => $this->getRandom('User')->id,
             'ticket_priorities_id' => rand(1, 5),
             'ticket_categories_id' => $this->getRandom('TicketCategory')->id,
+            'device_id' => $this->getRandom('Device')->id,
         ];
     }
 }

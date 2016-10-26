@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->apellido.', '.$this->nombre;
     }
 
+    public function getNombreComunAttribute()
+    {
+        return $this->nombre.' '.$this->apellido;
+    }
+
     public function encargado(Ticket $ticket)
     {
         return $this->ticketsACargo()->where('ticket_id',$ticket->id)->count();

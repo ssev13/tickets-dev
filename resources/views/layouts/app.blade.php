@@ -11,8 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-
+    {!! Html::style("/css/style.css") !!}
+    
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -21,35 +21,45 @@
     </script>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
+<div id="notifications"></div>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
 
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-            </div>
+                <div class="navbar-header">
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
+                    <!-- Collapsed Hamburger -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
-                <!-- Right Side Of Navbar -->
-                @include('layouts.login')
+                    <!-- Branding Image -->
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav">
+                        &nbsp;
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    @include('layouts.login')
+                </div>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
+
+
+
 
     @yield('content')
 

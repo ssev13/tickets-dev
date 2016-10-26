@@ -28,6 +28,9 @@ class CreateTicketsTable extends Migration
             $table->integer('ticket_priorities_id')->unsigned();
             $table->foreign('ticket_priorities_id')->references('id')->on('ticket_priorities')->onDelete('cascade');
 
+            $table->integer('device_id')->unsigned();
+            $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
