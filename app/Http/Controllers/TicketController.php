@@ -43,9 +43,21 @@ class TicketController extends Controller
         }
 */
         $hoy = Carbon::now();
-        $tickets = $this->selectTicketList()
-            ->orderBy('created_at','DESC')
-            ->paginate();
+
+        if (auth()->user()->perfil == 'usuario') {
+            $tickets = $this->selectTicketList()
+                ->where('user_id','=',auth()->user()->id)
+                ->where('estado','!=','Cerrado')
+                ->orderBy('created_at','DESC')
+                ->paginate();
+        }
+        else {
+            $tickets = $this->selectTicketList()
+                ->where('estado','!=','Cerrado')
+                ->orderBy('created_at','DESC')
+                ->paginate();
+        }
+
         return view('tickets/list', compact('tickets','hoy'));
     }
 
@@ -55,46 +67,96 @@ class TicketController extends Controller
 
         $buscar = '%'.$request->busqueda.'%';
 
-        $tickets = $this->selectTicketList()
-            ->where('titulo','like', $buscar)
-            ->orWhere('detalle','like', $buscar)
-            ->paginate();
+        if (auth()->user()->perfil == 'usuario') {
+            $tickets = $this->selectTicketList()
+                ->where('user_id','=',auth()->user()->id)
+                ->where('titulo','like', $buscar)
+                ->orWhere('detalle','like', $buscar)
+                ->paginate();
+        }
+        else {
+            $tickets = $this->selectTicketList()
+                ->where('titulo','like', $buscar)
+                ->orWhere('detalle','like', $buscar)
+                ->paginate();
+        }
+
         return view('tickets/list', compact('tickets','hoy'));
     }
 
     public function pending()
     {
         $hoy = Carbon::now();
-        $tickets = $this->selectTicketList()
-            ->where('estado','Pendiente')
-            ->paginate();
+
+        if (auth()->user()->perfil == 'usuario') {
+            $tickets = $this->selectTicketList()
+                ->where('user_id','=',auth()->user()->id)
+                ->where('estado','Pendiente')
+                ->paginate();
+        }
+        else {
+            $tickets = $this->selectTicketList()
+                ->where('estado','Pendiente')
+                ->paginate();
+        }
+
         return view('tickets/list', compact('tickets','hoy'));
     }
 
     public function opened()
     {
         $hoy = Carbon::now();
-        $tickets = $this->selectTicketList()
-            ->where('estado','Abierto')
-            ->paginate();
+
+        if (auth()->user()->perfil == 'usuario') {
+            $tickets = $this->selectTicketList()
+                ->where('user_id','=',auth()->user()->id)
+                ->where('estado','Abierto')
+                ->paginate();
+        }
+        else {
+            $tickets = $this->selectTicketList()
+                ->where('estado','Abierto')
+                ->paginate();
+        }
+
         return view('tickets/list', compact('tickets','hoy'));
     }
 
     public function closed()
     {
         $hoy = Carbon::now();
-        $tickets = $this->selectTicketList()
-            ->where('estado','Cerrado')
-            ->paginate();
+
+        if (auth()->user()->perfil == 'usuario') {
+            $tickets = $this->selectTicketList()
+                ->where('user_id','=',auth()->user()->id)
+                ->where('estado','Cerrado')
+                ->paginate();
+        }
+        else {
+            $tickets = $this->selectTicketList()
+                ->where('estado','Cerrado')
+                ->paginate();
+        }
+
         return view('tickets/list', compact('tickets','hoy'));
     }
 
     public function overdue()
     {
         $hoy = Carbon::now();
-        $tickets = $this->selectTicketList()
-            ->where('estado','Vencido')
-            ->paginate();
+
+        if (auth()->user()->perfil == 'usuario') {
+            $tickets = $this->selectTicketList()
+                ->where('user_id','=',auth()->user()->id)
+                ->where('estado','Vencido')
+                ->paginate();
+        }
+        else {
+            $tickets = $this->selectTicketList()
+                ->where('estado','Vencido')
+                ->paginate();
+        }
+
         return view('tickets/list', compact('tickets','hoy'));
     }
 
@@ -104,12 +166,6 @@ class TicketController extends Controller
 
         $opciones = ['Seguimiento', 'Tarea', 'Documento', 'Solucion']; 
 
-/*        $usuarios = DB::select( DB::raw("SELECT * 
-                FROM users
-                LEFT JOIN ticket_users ON users.id = ticket_users.user_id AND ticket_users.ticket_id = :ticketid
-                WHERE ticket_users.user_id is null
-                AND users.perfil<>'usuario'"), array('ticketid' => $id));
-*/
         $usuarios = User::where('perfil','!=', 'usuario')->get();
         
         return view('tickets/details', compact('ticket','opciones','usuarios'));
@@ -141,6 +197,7 @@ class TicketController extends Controller
             'detalle'               => $request->get('cuerpoTicket'),
             'ticket_categories_id'  => $request->get('categoria'),
             'ticket_priorities_id'  => $prioridad,
+            'device_id'             => 1,
             'vencimiento'           => $vencimiento,
             'estado'                => 'Pendiente',
         ]);
@@ -180,5 +237,32 @@ class TicketController extends Controller
         return redirect()->back();
 
     }
+
+    public function tareas()
+    {
+        if (auth()->user()->perfil == 'usuario') {
+            $tareas = TicketComment::select('ticket_id','tickets.titulo','users.apellido','users.nombre','comentario','tipo_obs')
+                ->join('users', 'users.id', '=', 'ticket_comments.user_id')
+                ->join('tickets', 'tickets.id', '=', 'ticket_comments.ticket_id')
+                ->where('users.id','=',auth()->user()->id)
+                ->where('tipo','Tarea')
+                ->paginate();
+        }
+        else {
+            $tareas = TicketComment::select('ticket_id','tickets.titulo','users.apellido','users.nombre','comentario','tipo_obs')
+                ->join('users', 'users.id', '=', 'ticket_comments.user_id')
+                ->join('tickets', 'tickets.id', '=', 'ticket_comments.ticket_id')
+                ->where('tipo','Tarea')
+                ->paginate();
+        }
+
+        return view('tickets.tareas',compact('tareas'));
+    }
+
+    public function documentos()
+    {
+        return 'Documentos';
+    }
+
 
 }

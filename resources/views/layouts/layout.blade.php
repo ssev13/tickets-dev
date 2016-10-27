@@ -41,8 +41,18 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                   <ul class="nav navbar-nav">
+                    <li><a href="{{ route('tickets.latest') }} ">Inicio</a></li>
+
                     <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filtros <span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Informes<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('informes.tareas') }}">Tareas</a></li>
+{{--                            <li><a href="{{ route('informes.documentos') }}">Documentos</a></li> --}}
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filtros<span class="caret"></span></a>
 
                         {!! Html::menu(config('tickets.menu')) !!}
 

@@ -12,6 +12,8 @@ use App\Entities\TicketCategory;
 use App\Entities\TicketPriority;
 use App\Entities\User;
 
+use App\Notifications\TicketAssigned;
+
 use Carbon\Carbon;
 
 class TicketUserController extends Controller
@@ -51,6 +53,8 @@ class TicketUserController extends Controller
         $ticket->comments()->save($comment);
 
         $usuario->asignar($ticket);
+
+        $usuario->notify(new TicketAssigned($ticket));
 
     	return redirect()->back();
     }

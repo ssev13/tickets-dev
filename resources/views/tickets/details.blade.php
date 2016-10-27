@@ -87,6 +87,7 @@
             </form>
 
             @unless($ticket->estado == 'Cerrado')
+                @include('tickets.partials.commentUploadfile')
                 @include('tickets.partials.commentNew', compact($opciones))
             @endunless
 

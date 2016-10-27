@@ -74,6 +74,12 @@ Route::group(['middleware' => 'auth'], function(){
         'uses' => 'TicketCommentController@submit'
     ]);
 
+//Subir archivo a Ticket
+    Route::post('/upload/{id}',[
+        'as'   => 'comments.uploadfile',
+        'uses' => 'TicketCommentController@uploadfile'
+    ]);
+
 //Cambiar Estado de Ticket
     Route::post('/cambioEstado/{id}',[
         'as'   => 'tickets.status',
@@ -89,6 +95,16 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/encargados/{id}/user/{user}',[
         'as'   => 'encargados.destroy',
         'uses' => 'TicketUserController@destroy'
+    ]);
+
+    Route::get('/tareas',[
+        'as'   => 'informes.tareas',
+        'uses' => 'TicketController@tareas'
+    ]);
+
+    Route::get('/documentos',[
+        'as'   => 'informes.documentos',
+        'uses' => 'TicketController@documentos'
     ]);
 
 });

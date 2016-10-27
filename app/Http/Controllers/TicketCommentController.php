@@ -43,4 +43,12 @@ class TicketCommentController extends Controller
 
 //    	dd($request->all());
     }
+
+    public function uploadfile(Request $request, $id)
+    {
+        $donde = 'files_'.$id;
+        $path = $request['documento']->store($donde);
+
+        return back();
+    }
 }

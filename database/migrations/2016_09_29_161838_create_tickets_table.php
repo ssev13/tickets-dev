@@ -23,7 +23,7 @@ class CreateTicketsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('ticket_categories_id')->unsigned();
-            $table->foreign('ticket_categories_id')->references('id')->on('ticket_categories');
+            $table->foreign('ticket_categories_id')->references('id')->on('ticket_categories')->onDelete('cascade');
 
             $table->integer('ticket_priorities_id')->unsigned();
             $table->foreign('ticket_priorities_id')->references('id')->on('ticket_priorities')->onDelete('cascade');
