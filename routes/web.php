@@ -107,6 +107,22 @@ Route::group(['middleware' => 'auth'], function(){
         'uses' => 'TicketController@documentos'
     ]);
 
+    //Rutas de FileManager
+    Route::get('/filemanager',[
+        'as'   => 'filemanager.index',
+        'uses' => 'FileManagerController@index'
+    ]);
+
+    Route::get('/getfile/{filename}',[
+        'as'   => 'filemanager.get',
+        'uses' => 'FileManagerController@get'
+    ]);
+
+    Route::post('/addfile/{id}',[
+        'as'   => 'filemanager.add',
+        'uses' => 'FileManagerController@add'
+    ]);
+
 });
 
 

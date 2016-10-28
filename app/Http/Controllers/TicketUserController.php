@@ -64,6 +64,11 @@ class TicketUserController extends Controller
     	$ticket = Ticket::findOrFail($id);
     	$usuario = User::findOrFail($user);
 
+        if (auth()->user()->perfil != 'tecnico') {
+            session()->flash('danger','No tiene permisos suficientes para quitar un encargado');
+            return redirect()->back();
+        }
+
 //Grabo un comentario con la baja de usuario
         $comment = new TicketComment();
         $comment->user_id = \Auth::user()->id;

@@ -1,7 +1,7 @@
-<form method="POST" action="{{ url('upload',$ticket) }} enctype="multipart/form-data">
+<form action=" {{ url('/addfile', $ticket->id) }}" method="POST" enctype="multipart/form-data">
+
     {!! csrf_field() !!}
 
-    <input class="form-control" type="file" name="documento"></input>
-    <button class="btn btn-primary" type="submit">Guardar</button>
+    <input type="file" name="filefield">
+    <input type="submit">
 </form>
-

@@ -12,11 +12,7 @@
                 
             </h2>
 
-            @if (Session::has('success'))
-                <div class='alert alert-success'>
-                    {{ Session::get('success') }}
-                </div>
-            @endif
+            @include('tickets.partials.sessionflash')
 
             <h3 class="label label-info">
                 Vencimiento {{ $ticket->vencimiento }}
@@ -42,11 +38,13 @@
                     {!! Form::close() !!}
                 @endforeach
             </p>
+
             @if (Auth::user()->perfil != 'usuario')
                 <?php $clase = ''  ?>
             @else
                 <?php $clase = ' hidden'  ?>
             @endif
+            
             {!! Form::open(['route' => ['encargados.submit', $ticket->id], 'method' => 'POST']) !!}
                 {!! csrf_field() !!}
                 <div class="form-group {{ $clase }}" >
@@ -87,7 +85,7 @@
             </form>
 
             @unless($ticket->estado == 'Cerrado')
-                @include('tickets.partials.commentUploadfile')
+                @include('tickets.partials.commentUploadfile', compact($ticket))
                 @include('tickets.partials.commentNew', compact($opciones))
             @endunless
 

@@ -44,10 +44,9 @@ class TicketController extends Controller
 */
         $hoy = Carbon::now();
 
-        if (auth()->user()->perfil == 'usuario') {
+        if (auth()->user()->perfil != 'tecnico') {
             $tickets = $this->selectTicketList()
-                ->where('user_id','=',auth()->user()->id)
-                ->where('estado','!=','Cerrado')
+                ->whereRaw('estado != "Cerrado" and (tickets.id in (SELECT ticket_id FROM ticket_users where user_id='.auth()->user()->id.') or tickets.user_id = '.auth()->user()->id.')')
                 ->orderBy('created_at','DESC')
                 ->paginate();
         }
@@ -67,11 +66,9 @@ class TicketController extends Controller
 
         $buscar = '%'.$request->busqueda.'%';
 
-        if (auth()->user()->perfil == 'usuario') {
+        if (auth()->user()->perfil != 'tecnico') {
             $tickets = $this->selectTicketList()
-                ->where('user_id','=',auth()->user()->id)
-                ->where('titulo','like', $buscar)
-                ->orWhere('detalle','like', $buscar)
+                ->whereRaw('(titulo like "'. $buscar.'" or detalle like "'. $buscar.'") and (tickets.id in (SELECT ticket_id FROM ticket_users where user_id='.auth()->user()->id.') or tickets.user_id = '.auth()->user()->id.')')
                 ->paginate();
         }
         else {
@@ -88,10 +85,9 @@ class TicketController extends Controller
     {
         $hoy = Carbon::now();
 
-        if (auth()->user()->perfil == 'usuario') {
+        if (auth()->user()->perfil != 'tecnico') {
             $tickets = $this->selectTicketList()
-                ->where('user_id','=',auth()->user()->id)
-                ->where('estado','Pendiente')
+                ->whereRaw('estado = "Pendiente" and (tickets.id in (SELECT ticket_id FROM ticket_users where user_id='.auth()->user()->id.') or tickets.user_id = '.auth()->user()->id.')')
                 ->paginate();
         }
         else {
@@ -107,10 +103,9 @@ class TicketController extends Controller
     {
         $hoy = Carbon::now();
 
-        if (auth()->user()->perfil == 'usuario') {
+        if (auth()->user()->perfil != 'tecnico') {
             $tickets = $this->selectTicketList()
-                ->where('user_id','=',auth()->user()->id)
-                ->where('estado','Abierto')
+                ->whereRaw('estado = "Abierto" and (tickets.id in (SELECT ticket_id FROM ticket_users where user_id='.auth()->user()->id.') or tickets.user_id = '.auth()->user()->id.')')
                 ->paginate();
         }
         else {
@@ -126,10 +121,9 @@ class TicketController extends Controller
     {
         $hoy = Carbon::now();
 
-        if (auth()->user()->perfil == 'usuario') {
+        if (auth()->user()->perfil != 'tecnico') {
             $tickets = $this->selectTicketList()
-                ->where('user_id','=',auth()->user()->id)
-                ->where('estado','Cerrado')
+                ->whereRaw('estado = "Cerrado" and (tickets.id in (SELECT ticket_id FROM ticket_users where user_id='.auth()->user()->id.') or tickets.user_id = '.auth()->user()->id.')')
                 ->paginate();
         }
         else {
@@ -145,10 +139,9 @@ class TicketController extends Controller
     {
         $hoy = Carbon::now();
 
-        if (auth()->user()->perfil == 'usuario') {
+        if (auth()->user()->perfil != 'tecnico') {
             $tickets = $this->selectTicketList()
-                ->where('user_id','=',auth()->user()->id)
-                ->where('estado','Vencido')
+                ->whereRaw('estado = "Vencido" and (tickets.id in (SELECT ticket_id FROM ticket_users where user_id='.auth()->user()->id.') or tickets.user_id = '.auth()->user()->id.')')
                 ->paginate();
         }
         else {
@@ -163,9 +156,7 @@ class TicketController extends Controller
     public function details($id)
     {
         $ticket = Ticket::findOrFail($id);
-
-        $opciones = ['Seguimiento', 'Tarea', 'Documento', 'Solucion']; 
-
+        $opciones = ['Seguimiento', 'Tarea', 'Solucion']; 
         $usuarios = User::where('perfil','!=', 'usuario')->get();
         
         return view('tickets/details', compact('ticket','opciones','usuarios'));
@@ -240,12 +231,13 @@ class TicketController extends Controller
 
     public function tareas()
     {
-        if (auth()->user()->perfil == 'usuario') {
+        if (auth()->user()->perfil != 'tecnico') {
             $tareas = TicketComment::select('ticket_id','tickets.titulo','users.apellido','users.nombre','comentario','tipo_obs')
                 ->join('users', 'users.id', '=', 'ticket_comments.user_id')
                 ->join('tickets', 'tickets.id', '=', 'ticket_comments.ticket_id')
                 ->where('users.id','=',auth()->user()->id)
                 ->where('tipo','Tarea')
+                ->orderBy('ticket_comments.created_at','DESC')
                 ->paginate();
         }
         else {
@@ -253,6 +245,7 @@ class TicketController extends Controller
                 ->join('users', 'users.id', '=', 'ticket_comments.user_id')
                 ->join('tickets', 'tickets.id', '=', 'ticket_comments.ticket_id')
                 ->where('tipo','Tarea')
+                ->orderBy('ticket_comments.created_at','DESC')
                 ->paginate();
         }
 
