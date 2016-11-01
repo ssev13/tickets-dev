@@ -23,7 +23,7 @@ class FileManagerController extends Controller
 	{
 		$entries = FileManager::all();
  
-		return view('filemanager.index', compact('entries'));
+		return view('filemanager.files_index', compact('entries'));
 	}
  
 	public function add(Request $request, $id) {
@@ -44,7 +44,7 @@ class FileManagerController extends Controller
         $comment = new TicketComment();
         $comment->user_id    = \Auth::user()->id;
         $comment->tipo       = 'Documento';
-        $comment->comentario = 'Se agregó un documento. '.$entry->original_filename;
+        $comment->comentario = "Se agregó un documento. <a href='".route('filemanager.get', $entry->filename)."'>".$entry->original_filename."</a>";
         $comment->responde   = 0;
         $comment->tipo_obs   = '';
         $comment->ticket_id  = $id;

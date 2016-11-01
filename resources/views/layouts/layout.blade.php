@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tickets by ssev13</title>
+    <title>Tickets</title>
 
     {!! Html::style("/css/style.css") !!}
      
@@ -47,7 +47,7 @@
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Informes<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('informes.tareas') }}">Tareas</a></li>
-                            <li><a href="{{ route('filemanager.index') }} ">Archivos</a></li>
+                            <li><a href="{{ route('filemanager.files_index') }} ">Archivos</a></li>
                         </ul>
                     </li>
 

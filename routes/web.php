@@ -109,7 +109,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     //Rutas de FileManager
     Route::get('/filemanager',[
-        'as'   => 'filemanager.index',
+        'as'   => 'filemanager.files_index',
         'uses' => 'FileManagerController@index'
     ]);
 
